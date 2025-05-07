@@ -3,15 +3,17 @@ from typing import List
 from app.database import items_db
 from app.models import Item, ItemCreate, ItemUpdate
 
+
 #2 Fixed logic issue where the function was returning items with a
 # lower price than the minimum instead of higher
-def get_items(min_price: float = 0.0) -> List[Item]:
-    return [Item(**item) for item in items_db if item["price"] >= min_price]
+# only iterates through the items in the range offset until offset + limit
+def get_items(min_price: float = 0.0, offset: int = 0, limit: int = 100) -> List[Item]:
+    return [Item(**item) for item in items_db[offset: offset + limit] if item["price"] >= min_price]
 
 
 def create_item(item: ItemCreate) -> Item:
-    new_id = max(item["id"] for item in items_db) + 1
-    new_item = {"id": new_id, **item.dict()}
+    new_id = len(items_db)
+    new_item = {"id": new_id, **item.model_dump()}
     items_db.append(new_item)
     return Item(**new_item)
 
