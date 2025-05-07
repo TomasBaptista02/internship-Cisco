@@ -8,9 +8,10 @@ class Item(BaseModel):
     name: str
     price: float
 
-
+# 3 enforced a minimum of three characters directly in base model
+# non compliance will result in 422 response
 class ItemCreate(BaseModel):
-    name: str = Field(...)
+    name: str = Field(..., min_length=3)
     price: float
 
 
