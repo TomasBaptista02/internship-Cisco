@@ -23,7 +23,7 @@ def list_items(query: Annotated[FilterParameters, Query()]) -> list[Item]:
 def add_item(item: ItemCreate) -> Item:
     return create_item(item)
 
-
+# If the name is already being used the server sends a 422 response
 @app.put("/items/{item_id}")
 def update_item(item_id: int, item: ItemUpdate) -> Item:
     updated = update_item_by_id(item_id, item)

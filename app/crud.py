@@ -18,7 +18,12 @@ def create_item(item: ItemCreate) -> Item:
     return Item(**new_item)
 
 
-def update_item_by_id(item_id: int, update: ItemUpdate) -> Item | None:
+#4 added verification for duplicate names
+def update_item_by_id(item_id: int, update: ItemUpdate) -> Item | str | None:
+    if update.name:
+        for item in items_db:
+            if update.name == item["name"]:
+                return "name_conflict"
     for item in items_db:
         if item["id"] == item_id:
             if update.name:
