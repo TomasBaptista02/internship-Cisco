@@ -5,8 +5,9 @@ from app.models import Item, ItemCreate, ItemUpdate
 
 app = FastAPI()
 
-
-@app.get("/heath")
+# 1 corrected the spelling of the endpoint
+# health was misspelled as heath
+@app.get("/health")
 def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
