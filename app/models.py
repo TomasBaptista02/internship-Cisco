@@ -23,6 +23,6 @@ class ItemUpdate(BaseModel):
 
 class FilterParameters(BaseModel):
     model_config = {"extra": "forbid"}
-    min_price: float = Field(0.0, ge=0)
-    offset: int = Field(0, ge=0)
-    limit: int = Field(100, gt=0)
+    min_price: float = Field(0.0)
+    offset: int = Field(0)
+    limit: int = Field(100)
