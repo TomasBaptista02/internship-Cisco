@@ -11,7 +11,10 @@ def get_items(min_price: float = 0.0, offset: int = 0, limit: int = 100) -> List
     return [Item(**item) for item in items_db[offset: offset + limit] if item["price"] >= min_price]
 
 
-def create_item(item: ItemCreate) -> Item:
+def create_item(item: ItemCreate) -> Item | str:
+    duplicate = sum(1 for i in items_db if item.name == i["name"])
+    if duplicate > 0:
+        return "duplicate_name"
     new_id = len(items_db)
     new_item = {"id": new_id, **item.model_dump()}
     items_db.append(new_item)
@@ -23,7 +26,7 @@ def update_item_by_id(item_id: int, update: ItemUpdate) -> Item | str | None:
     if update.name:
         for item in items_db:
             if update.name == item["name"]:
-                return "name_conflict"
+                return "duplicate_name"
     for item in items_db:
         if item["id"] == item_id:
             if update.name:

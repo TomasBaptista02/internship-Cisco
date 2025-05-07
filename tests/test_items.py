@@ -66,3 +66,17 @@ def test_negative_offset() -> None:
 def test_negative_limit() -> None:
     response2 = client.get("/items?min_price=0.0&offset=0&limit=-10")
     assert response2.status_code == 400
+
+
+def test_duplicate_name_create():
+    item_data = {
+        "name": "nome ficticio",
+        "price": 35
+    }
+    response1 = client.post("/items", json=item_data)
+    assert response1.status_code == 200
+    assert response1.json()["name"] == item_data["name"]
+
+    response2 = client.post("/items", json=item_data)
+    assert response2.status_code == 400
+    assert response2.json()["detail"] == "Duplicate Name"
