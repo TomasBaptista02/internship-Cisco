@@ -1,6 +1,7 @@
 from typing import Optional
 
 from pydantic import BaseModel, Field
+from pydantic.v1.class_validators import Validator
 
 
 class Item(BaseModel):
@@ -18,8 +19,8 @@ class ItemCreate(BaseModel):
 
 
 class ItemUpdate(BaseModel):
-    name: Optional[str] = Field(min_length=3)
-    price: Optional[float] = Field(ge=0)
+    name: Optional[str] = Field(default=None, min_length=3)
+    price: Optional[float] = Field(default=None, ge=0.0)
 
 class FilterParameters(BaseModel):
     model_config = {"extra": "forbid"}

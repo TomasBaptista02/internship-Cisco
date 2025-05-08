@@ -89,7 +89,7 @@ def test_edit_so_price_is_invalid():
     }
     response1 = client.post("/items", json=item_data)
     invalid_price = {
-
+        "name": None,
         "price": -35
     }
     resp = client.put(f"/items/${response1.json()["id"]}",json = invalid_price )
@@ -107,5 +107,19 @@ def test_edit_so_name_is_invalid():
     }
     resp = client.put(f"/items/${response1.json()["id"]}",json = invalid_price )
     assert resp.status_code == 422
+
+def test_valid_name_edit():
+    item_data = {
+        "name": "nome unico3",
+        "price": 35
+    }
+    response1 = client.post("/items", json=item_data)
+    invalid_price = {
+        "name": "nome valido",
+        "price": None
+    }
+    resp = client.put(f"/items/{response1.json()['id']}", json=invalid_price)
+    print(resp.json())
+    assert resp.status_code == 200
 
 
