@@ -80,3 +80,32 @@ def test_duplicate_name_create():
     response2 = client.post("/items", json=item_data)
     assert response2.status_code == 400
     assert response2.json()["detail"] == "Duplicate Name"
+
+
+def test_edit_so_price_is_invalid():
+    item_data = {
+        "name": "nome ficticio",
+        "price": 35
+    }
+    response1 = client.post("/items", json=item_data)
+    invalid_price = {
+
+        "price": -35
+    }
+    resp = client.put(f"/items/${response1.json()["id"]}",json = invalid_price )
+    assert resp.status_code == 422
+
+def test_edit_so_name_is_invalid():
+    item_data = {
+        "name": "nome ficticio",
+        "price": 35
+    }
+    response1 = client.post("/items", json=item_data)
+    invalid_price = {
+        "price": None,
+        "name": "a"
+    }
+    resp = client.put(f"/items/${response1.json()["id"]}",json = invalid_price )
+    assert resp.status_code == 422
+
+

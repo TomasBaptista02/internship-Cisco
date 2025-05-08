@@ -18,8 +18,8 @@ class ItemCreate(BaseModel):
 
 
 class ItemUpdate(BaseModel):
-    name: Optional[str] = None
-    price: Optional[float] = None
+    name: Optional[str] = Field(min_length=3)
+    price: Optional[float] = Field(ge=0)
 
 class FilterParameters(BaseModel):
     model_config = {"extra": "forbid"}
