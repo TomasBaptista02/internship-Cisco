@@ -84,7 +84,7 @@ def test_duplicate_name_create():
 
 def test_edit_so_price_is_invalid():
     item_data = {
-        "name": "nome ficticio",
+        "name": "nome unico1",
         "price": 35
     }
     response1 = client.post("/items", json=item_data)
@@ -97,7 +97,7 @@ def test_edit_so_price_is_invalid():
 
 def test_edit_so_name_is_invalid():
     item_data = {
-        "name": "nome ficticio",
+        "name": "nome unico2",
         "price": 35
     }
     response1 = client.post("/items", json=item_data)
